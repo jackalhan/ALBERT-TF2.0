@@ -1,0 +1,39 @@
+export GLUE_DIR=./glue_data/ \
+export ALBERT_DIR=./models/large/ \
+export TASK_NAME=COLA \
+export OUTPUT_DIR=cola_processed \
+mkdir $OUTPUT_DIR
+
+
+
+python create_finetuning_data.py \
+--input_data_dir=./glue_data/
+\
+--spm_model_file=./models/large/vocab/30k-clean.model
+\
+--train_data_output_path=./output/cola_processed/COLA_train.tf_record
+\
+--eval_data_output_path=./output/cola_processed/COLA_eval.tf_record
+\
+--meta_data_file_path=./output/cola_processed/COLA_meta_data
+\
+--fine_tuning_task_type=classification
+--max_seq_length=128
+\
+--classification_task_name=COLA
+
+export MODEL_DIR=CoLA_OUT
+python run_classifer.py \
+--train_data_path=${OUTPUT_DIR}/${TASK_NAME}_train.tf_record \
+--eval_data_path=${OUTPUT_DIR}/${TASK_NAME}_eval.tf_record \
+--input_meta_data_path=${OUTPUT_DIR}/${TASK_NAME}_meta_data \
+--albert_config_file=${ALBERT_DIR}/config.json \
+--task_name=${TASK_NAME} \
+--spm_model_file=${ALBERT_DIR}/vocab/30k-clean.model \
+--output_dir=${MODEL_DIR} \
+--init_checkpoint=${ALBERT_DIR}/tf2_model.h5 \
+--do_train \
+--do_eval \
+--train_batch_size=16 \
+--learning_rate=1e-5 \
+--custom_training_loop

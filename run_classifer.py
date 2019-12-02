@@ -348,7 +348,7 @@ def main(_):
     with strategy.scope():
         loss,accuracy = model.evaluate(evaluation_dataset)
 
-    print(f"loss : {loss} , Accuracy : {accuracy}")
+    print("loss : {} , Accuracy : {}".format(loss, accuracy))
 
   if FLAGS.do_predict:
 
