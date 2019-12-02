@@ -161,7 +161,7 @@ def run_customized_training(strategy,
         albert_config, max_seq_length, max_predictions_per_seq)
     
     if FLAGS.init_checkpoint:
-      logging.info(f"pre-trained weights loaded from {FLAGS.init_checkpoint}")
+      logging.info("pre-trained weights loaded from {}".format(FLAGS.init_checkpoint))
       pretrain_model.load_weights(FLAGS.init_checkpoint)
 
     learning_rate_fn = tf.keras.optimizers.schedules.PolynomialDecay(initial_learning_rate=initial_lr,
@@ -211,7 +211,7 @@ def run_customized_training(strategy,
                'checkpoint', latest_checkpoint_file)
   status = checkpoint.restore(latest_checkpoint_file)
   status.assert_existing_objects_matched().expect_partial()
-  core_model.save_weights(f"{model_dir}/tf2_model.h5")
+  core_model.save_weights("{}/tf2_model.h5".format(model_dir))
   return trained_model
 
 

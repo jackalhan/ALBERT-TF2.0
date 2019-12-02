@@ -148,9 +148,9 @@ def main(_):
           "\n\t" + "\n\t".join(sorted(set(stock_values.keys()).difference(loaded_weights))))
 
     if FLAGS.model_type == "albert_encoder":
-        albert_model.save_weights(f"{tfhub_model_path}/tf2_model.h5")
+        albert_model.save_weights("{}/tf2_model.h5".format(tfhub_model_path))
     else:
-        albert_full_model.save_weights(f"{tfhub_model_path}/tf2_model_full.h5")
+        albert_full_model.save_weights("{}/tf2_model_full.h5".format(tfhub_model_path))
 
 if __name__ == "__main__":
     flags.mark_flag_as_required("tf_hub_path")
